@@ -1,3 +1,4 @@
+import coachImg from "../assets/coach.jpg";
 const points = [
     { 
         title: "Programmes Sur-Mesure", 
@@ -25,7 +26,7 @@ export default function Propos() {
             
             <div className="relative z-10 overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl">
               <img 
-                src="/src/assets/coach.jpg" 
+                src={coachImg}
                 alt="Coach Sportif" 
                 className="w-full h-[600px] object-cover transform hover:scale-105 transition-transform duration-700"
                 loading="lazy"

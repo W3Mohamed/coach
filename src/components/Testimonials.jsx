@@ -1,3 +1,4 @@
+import transform1 from "../assets/transform1.jfif";
 const testimonials = [
   {
     name: "Thomas L.",
@@ -7,7 +8,7 @@ const testimonials = [
     size: "col-span-1"
   },
   {
-    image: "/src/assets/transform1.jfif", // Photo avant/après
+    image: transform1, // Photo avant/après
     size: "md:col-span-2 md:row-span-2"
   },
   {
