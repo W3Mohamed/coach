@@ -52,6 +52,7 @@ export default function Contact() {
             <div 
               className="calendly-inline-widget w-full h-full"
               style={{ minWidth: '320px', height: '600px' }}
+              loading="lazy"
             ></div>
           </div>
 
