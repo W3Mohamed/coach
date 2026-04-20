@@ -67,7 +67,6 @@ export default function Propos() {
               ))}
             </div>
 
-            {/* CTA de signature */}
             <button className="mt-12 bg-white text-black font-black py-4 px-10 uppercase italic hover:bg-rouge hover:text-white transition-all duration-300">
               Découvrir ma méthode
             </button>
