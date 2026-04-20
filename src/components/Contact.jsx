@@ -8,27 +8,38 @@ export default function Contact() {
   const { ref, inView } = useInView({ triggerOnce: true });
   useEffect(() => {
     if (inView) {
-      const head = document.querySelector('head');
-      const script = document.createElement('script');
-      script.setAttribute('src', 'https://assets.calendly.com/assets/external/widget.js');
+      // 1. On vérifie si le script existe déjà pour ne pas le doubler
+      if (!document.getElementById("calendly-script")) {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "https://assets.calendly.com/assets/external/widget.css";
+        document.head.appendChild(link);
 
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = "https://assets.calendly.com/assets/external/widget.css";
+        const script = document.createElement("script");
+        script.id = "calendly-script";
+        script.src = "https://assets.calendly.com/assets/external/widget.js";
+        script.async = true;
+        document.body.appendChild(script);
 
-      head.appendChild(script);
-      head.appendChild(link);
+        script.onload = () => {
+          loadCalendly();
+        };
+      } else {
+        // Si le script est déjà là (ex: l'utilisateur remonte et redescend)
+        loadCalendly();
+      }
+    }
 
-      // On attend que le script soit chargé pour initialiser
-      script.onload = () => {
+    function loadCalendly() {
+      // On attend un tout petit peu que React place la div dans le DOM
+      setTimeout(() => {
         if (window.Calendly) {
           window.Calendly.initInlineWidget({
-            // ON PASSE TOUT DANS L'URL ICI
             url: 'https://calendly.com/mohamedbenachenhou430/30min?locale=fr&background_color=0a0a0a&text_color=ffffff&primary_color=ff1313&hide_event_type_details=1&hide_gdpr_banner=1',
             parentElement: document.querySelector('.calendly-inline-widget'),
           });
         }
-      };
+      }, 100);
     }
   }, [inView]);
   return (
