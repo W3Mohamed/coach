@@ -6,13 +6,13 @@ const services = [
         buttonText: "En savoir plus"
     },
     {
-        image: new URL("../assets/service2.jpg", import.meta.url).href,
+        image: new URL("../assets/service2.webp", import.meta.url).href,
         title: "Musculation",
         description: "Des programmes de musculation pour renforcer votre corps et améliorer votre force.",
         buttonText: "En savoir plus"
     },
     {
-        image: new URL("../assets/service3.jpg", import.meta.url).href,
+        image: new URL("../assets/service3.webp", import.meta.url).href,
         title: "Coaching personnalisé",
         description: "Des programmes d'entraînement adaptés à vos besoins et objectifs.",
         buttonText: "En savoir plus"

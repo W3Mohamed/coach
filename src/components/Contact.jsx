@@ -2,25 +2,35 @@ import { MdOutlineEmail } from "react-icons/md";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { FaInstagram, FaTiktok } from "react-icons/fa";
 import { useEffect } from "react";
+import { useInView } from 'react-intersection-observer';
 
 export default function Contact() {
+  const { ref, inView } = useInView({ triggerOnce: true });
   useEffect(() => {
-    const head = document.querySelector('head');
-    const script = document.createElement('script');
-    script.setAttribute('src', 'https://assets.calendly.com/assets/external/widget.js');
-    head.appendChild(script);
+    if (inView) {
+      const head = document.querySelector('head');
+      const script = document.createElement('script');
+      script.setAttribute('src', 'https://assets.calendly.com/assets/external/widget.js');
 
-    // On attend que le script soit chargé pour initialiser
-    script.onload = () => {
-      if (window.Calendly) {
-        window.Calendly.initInlineWidget({
-          // ON PASSE TOUT DANS L'URL ICI
-          url: 'https://calendly.com/mohamedbenachenhou430/30min?locale=fr&background_color=0a0a0a&text_color=ffffff&primary_color=ff1313&hide_event_type_details=1&hide_gdpr_banner=1',
-          parentElement: document.querySelector('.calendly-inline-widget'),
-        });
-      }
-    };
-  }, []);
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "https://assets.calendly.com/assets/external/widget.css";
+
+      head.appendChild(script);
+      head.appendChild(link);
+
+      // On attend que le script soit chargé pour initialiser
+      script.onload = () => {
+        if (window.Calendly) {
+          window.Calendly.initInlineWidget({
+            // ON PASSE TOUT DANS L'URL ICI
+            url: 'https://calendly.com/mohamedbenachenhou430/30min?locale=fr&background_color=0a0a0a&text_color=ffffff&primary_color=ff1313&hide_event_type_details=1&hide_gdpr_banner=1',
+            parentElement: document.querySelector('.calendly-inline-widget'),
+          });
+        }
+      };
+    }
+  }, [inView]);
   return (
     <section id="contact" className="bg-noir py-24 relative overflow-hidden">
       {/* Glow décoratif */}
@@ -49,11 +59,17 @@ export default function Contact() {
             </div>
 
             {/* Widget Calendly */}
+            {inView ? (
             <div 
               className="calendly-inline-widget w-full h-full"
               style={{ minWidth: '320px', height: '600px' }}
               loading="lazy"
             ></div>
+            ) : (
+              <div className="flex items-center justify-center h-full text-gray-500 italic font-body">
+                Chargement du calendrier...
+              </div>
+            )}
           </div>
 
           {/* ZONE DROITE : FORMULAIRE (Engagement Léger) */}
