@@ -1,4 +1,4 @@
-import transform1 from "../assets/transform1.jfif";
+import transform1 from "../assets/transform1.webp";
 const testimonials = [
   {
     name: "Thomas L.",

@@ -4,21 +4,21 @@ import { HiArrowNarrowLeft, HiArrowNarrowRight } from "react-icons/hi"; // Pense
 
 const slides = [
     {
-        image: new URL("../assets/header.jpg", import.meta.url).href,
+        image: new URL("../assets/header.webp", import.meta.url).href,
         title1: "Domine ton corps",
         title2: "Coaching d'élite à Paris",
         description: "Mohamed t'accompagne vers ta meilleure version physique et mentale.",
         buttonText: "Commencer maintenant"
     },
     {
-        image: new URL("../assets/header2.jpg", import.meta.url).href,
+        image: new URL("../assets/header2.webp", import.meta.url).href,
         title1: "Zéro excuses",
         title2: "Résultats garantis",
         description: "Un suivi millimétré pour des transformations réelles et durables.",
         buttonText: "Voir les programmes"
     },
     {
-        image: new URL("../assets/header3.jpg", import.meta.url).href,
+        image: new URL("../assets/header3.webp", import.meta.url).href,
         title1: "Force & Mental",
         title2: "Prépare ton futur",
         description: "Rejoins la communauté et repousse les barrières de la performance.",

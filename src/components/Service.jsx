@@ -1,6 +1,6 @@
 const services = [
     {
-        image: new URL("../assets/service1.jpg", import.meta.url).href,
+        image: new URL("../assets/service1.webp", import.meta.url).href,
         title: "Perte de poids",
         description: "Des programmes de perte de poids efficaces et durables pour vous aider à atteindre vos objectifs de fitness.",
         buttonText: "En savoir plus"

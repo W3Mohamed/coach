@@ -1,4 +1,4 @@
-import coachImg from "../assets/coach.jpg";
+import coachImg from "../assets/coach.webp";
 const points = [
     { 
         title: "Programmes Sur-Mesure", 
