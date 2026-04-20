@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Funnel+Display:wght@300..800&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+    --font-heading: "Oswald", sans-serif;
+
+    --color-rouge : #ff1313;
+    --color-noir : #0a0a0a;
+    --color-gris : #1a1a1a;
+    --color-blanc : #ffffff;
+    --color-blanc-casse : #f5f5f5;
+}
+@utility text-outline {
+    -webkit-text-stroke: 1px #f6f7f8;
+    -webkit-text-fill-color: transparent;
+}
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* On décale de la moitié car le contenu est doublé */
+}
+
+.animate-ticker {
+  display: flex;
+  width: max-content;
+  animation: ticker 30s linear infinite; /* Ajuste '30s' pour la vitesse */
+}
+
+/* Optionnel : Stopper au survol de la souris */
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
