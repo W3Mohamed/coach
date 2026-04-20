@@ -1,3 +1,6 @@
+import { FaInstagram, FaTiktok, FaFacebook } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+
 export default function Footer() {
   return (
     <footer className="bg-noir pt-20 pb-10 border-t border-white/5">
@@ -13,12 +16,11 @@ export default function Footer() {
               Transforme ton potentiel en performance. Programmes d'élite pour athlètes déterminés et particuliers motivés.
             </p>
             <div className="flex gap-4">
-              {/* Icônes de réseaux sociaux stylisées */}
-              {['IG', 'FB', 'YT', 'TK'].map((social) => (
-                <a key={social} href="#" className="w-10 h-10 border border-white/10 flex items-center justify-center text-xs font-black hover:bg-rouge hover:border-rouge transition-all duration-300">
-                  {social}
-                </a>
-              ))}
+              {/* Icônes de réseaux sociaux stylisées des imorts */}
+              <FaInstagram className='w-10 h-10 p-2 flex items-center justify-center border border-white/10 text-blanc/60 hover:border-rouge hover:text-rouge transition-all duration-300' />
+              <FaFacebook className='w-10 h-10 p-2 flex items-center justify-center border border-white/10 text-blanc/60 hover:border-rouge hover:text-rouge transition-all duration-300' />
+              <FaTiktok className='w-10 h-10 p-2 flex items-center justify-center border border-white/10 text-blanc/60 hover:border-rouge hover:text-rouge transition-all duration-300' />
+              <FaXTwitter className='w-10 h-10 p-2 flex items-center justify-center border border-white/10 text-blanc/60 hover:border-rouge hover:text-rouge transition-all duration-300' />
             </div>
           </div>
 
@@ -70,9 +72,10 @@ export default function Footer() {
 
         </div>
 
-        {/* Barre de Copyright */}
+        {/* Barre de Copyright  ajout creer par w3mohamed en ajoutant un lien vers mon site https://www.monsite.com */}
         <div className="border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-gray-600 font-bold uppercase tracking-[0.3em]">
-          <p>© 2024 COACHLIFIT - TOUS DROITS RÉSERVÉS.</p>
+          <p>© 2026 COACHLIFIT - TOUS DROITS RÉSERVÉS.</p>
+          <p>Créé par <a href="https://w3mohamed.infinityfreeapp.com" target="_blank" rel="noopener noreferrer" className="hover:text-rouge transition-colors">w3mohamed</a></p>
           <div className="flex gap-8">
             <a href="#" className="hover:text-white transition-colors">Mentions Légales</a>
             <a href="#" className="hover:text-white transition-colors">Confidentialité</a>
