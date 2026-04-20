@@ -3,7 +3,7 @@ import { NavbarMenu } from '../../mockData/data';
 import { FaInstagram, FaTiktok, FaFacebook } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { MdMenu, MdClose } from "react-icons/md";
-import ResponsiveMenu from './ResponsiveMenu';
+import ResponsiveMenu from './ResponsiveMenu.jsx';
 
 export default function Navbar() {
     const [open, setOpen] = useState(false);
