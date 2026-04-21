@@ -68,9 +68,9 @@ export default function Propos() {
               ))}
             </div>
 
-            <button className="mt-12 bg-white text-black font-black py-4 px-10 uppercase italic hover:bg-rouge hover:text-white transition-all duration-300">
+            <a href="#contact" className="mt-12 inline-block text-center bg-white text-black font-black py-4 px-10 uppercase italic hover:bg-rouge hover:text-white transition-all duration-300">
               Découvrir ma méthode
-            </button>
+            </a>
           </div>
 
         </div>

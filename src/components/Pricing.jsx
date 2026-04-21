@@ -63,13 +63,13 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <button className={`w-full py-4 font-black uppercase italic tracking-widest transition-all ${
+              <a href="#contact" className={`w-full block text-center py-4 font-black uppercase italic tracking-widest transition-all ${
                 plan.recommended 
                 ? "bg-rouge text-white hover:bg-white hover:text-black" 
                 : "bg-white/10 text-white hover:bg-white hover:text-black"
               }`}>
                 Choisir ce pack
-              </button>
+              </a>
             </div>
           ))}
         </div>

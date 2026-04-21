@@ -1,21 +1,26 @@
+import { button } from "framer-motion/client";
+
 const services = [
     {
         image: new URL("../assets/service1.webp", import.meta.url).href,
         title: "Perte de poids",
         description: "Des programmes de perte de poids efficaces et durables pour vous aider à atteindre vos objectifs de fitness.",
-        buttonText: "En savoir plus"
+        buttonText: "En savoir plus",
+        buttonLink: "#contact"
     },
     {
         image: new URL("../assets/service2.webp", import.meta.url).href,
         title: "Musculation",
         description: "Des programmes de musculation pour renforcer votre corps et améliorer votre force.",
-        buttonText: "En savoir plus"
+        buttonText: "En savoir plus",
+        buttonLink: "#contact"
     },
     {
         image: new URL("../assets/service3.webp", import.meta.url).href,
         title: "Coaching personnalisé",
         description: "Des programmes d'entraînement adaptés à vos besoins et objectifs.",
-        buttonText: "En savoir plus"
+        buttonText: "En savoir plus",
+        buttonLink: "#contact"
     }
 ]
 export default function Service() {
@@ -66,7 +71,10 @@ export default function Service() {
                                 </p>
 
                                 {/* Bouton Moderne */}
-                                <button className="relative w-full py-4 px-6 border border-white/20 text-white font-black uppercase italic tracking-widest overflow-hidden group/btn">
+                                <a 
+                                    href={service.buttonLink} 
+                                    className="relative flex justify-center items-center w-full py-4 px-6 border border-white/20 text-white font-black uppercase italic tracking-widest overflow-hidden group/btn"
+                                >
                                     {/* Le texte : on le met en z-10 pour qu'il reste au-dessus de la couleur */}
                                     <span className="relative z-10 transition-colors duration-500 group-hover/btn:text-white">
                                         {service.buttonText}
@@ -74,7 +82,7 @@ export default function Service() {
 
                                     {/* Le fond : il est caché à gauche (-translate-x-full) et glisse au hover */}
                                     <div className="absolute inset-0 bg-rouge -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-500 ease-out" />
-                                </button>
+                                </a>
                             </div>
                         </div>
                     ))}

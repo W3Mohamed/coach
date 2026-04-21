@@ -8,21 +8,24 @@ const slides = [
         title1: "Domine ton corps",
         title2: "Coaching d'élite à Paris",
         description: "Mohamed t'accompagne vers ta meilleure version physique et mentale.",
-        buttonText: "Commencer maintenant"
+        buttonText: "Commencer maintenant",
+        buttonLink: "#contact"
     },
     {
         image: new URL("../assets/header2.webp", import.meta.url).href,
         title1: "Zéro excuses",
         title2: "Résultats garantis",
         description: "Un suivi millimétré pour des transformations réelles et durables.",
-        buttonText: "Voir les programmes"
+        buttonText: "Voir les programmes",
+        buttonLink: "#programme"
     },
     {
         image: new URL("../assets/header3.webp", import.meta.url).href,
         title1: "Force & Mental",
         title2: "Prépare ton futur",
         description: "Rejoins la communauté et repousse les barrières de la performance.",
-        buttonText: "Me contacter"
+        buttonText: "Me contacter",
+        buttonLink: "#contact"
     }
 ];
 
@@ -95,13 +98,20 @@ export default function Hero() {
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ delay: 0.9 }}
+                            className="mt-8" // Ajoute un peu d'espace au-dessus si besoin
                         >
-                            <button className="relative overflow-hidden group border-2 border-rouge px-10 py-4 font-black uppercase italic tracking-widest text-white transition-all">
-                                <span className="relative z-10 group-hover:text-black transition-colors duration-300">
+                            <a 
+                                href={slides[current].buttonLink} 
+                                className="relative inline-block overflow-hidden group border-2 border-rouge px-10 py-4 font-black uppercase italic tracking-widest text-white transition-all duration-300"
+                            >
+                                {/* Texte du bouton */}
+                                <span className="relative z-20 block group-hover:text-noir transition-colors duration-300">
                                     {slides[current].buttonText}
                                 </span>
-                                <div className="absolute inset-0 bg-rouge translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-                            </button>
+
+                                {/* L'effet de remplissage (Slide-up) */}
+                                <div className="absolute inset-0 z-10 bg-rouge translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+                            </a>
                         </motion.div>
                     </div>
                 </motion.div>
