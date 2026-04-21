@@ -15,7 +15,7 @@ const points = [
 ]
 export default function Propos() {
   return (
-    <section className="bg-noir py-24 overflow-hidden">
+    <section id="about" className="bg-noir py-24 overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center gap-16">
           

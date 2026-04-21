@@ -20,7 +20,7 @@ const services = [
 ]
 export default function Service() {
     return (
-        <section className="bg-noir py-24 relative overflow-hidden">
+        <section id="programme" className="bg-noir py-24 relative overflow-hidden">
             <div className="container mx-auto px-4 relative z-10">
                 {/* Titre avec effet de profondeur */}
                 <div className="relative mb-16 text-center">

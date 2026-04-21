@@ -1,54 +1,39 @@
 import { MdOutlineEmail } from "react-icons/md";
 import { BsFillTelephoneFill } from "react-icons/bs";
-import { FaInstagram, FaTiktok } from "react-icons/fa";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useInView } from 'react-intersection-observer';
 
 export default function Contact() {
-  const { ref, inView } = useInView({ triggerOnce: true });
+  const calendlyRef = useRef(null); // ref direct sur la div Calendly
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0 });
+
   useEffect(() => {
-    if (inView) {
-      // 1. On vérifie si le script existe déjà pour ne pas le doubler
-      if (!document.getElementById("calendly-script")) {
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = "https://assets.calendly.com/assets/external/widget.css";
-        document.head.appendChild(link);
+    if (!inView || !calendlyRef.current) return;
 
-        const script = document.createElement("script");
-        script.id = "calendly-script";
-        script.src = "https://assets.calendly.com/assets/external/widget.js";
-        script.async = true;
-        document.body.appendChild(script);
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://assets.calendly.com/assets/external/widget.css";
+    document.head.appendChild(link);
 
-        script.onload = () => {
-          loadCalendly();
-        };
-      } else {
-        // Si le script est déjà là (ex: l'utilisateur remonte et redescend)
-        loadCalendly();
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    script.onload = () => {
+      if (window.Calendly && calendlyRef.current) {
+        window.Calendly.initInlineWidget({
+          url: 'https://calendly.com/mohamedbenachenhou430/30min?locale=fr&background_color=0a0a0a&text_color=ffffff&primary_color=ff1313&hide_event_type_details=1&hide_gdpr_banner=1',
+          parentElement: calendlyRef.current, // ref React, toujours à jour
+        });
       }
-    }
-
-    function loadCalendly() {
-      // On attend un tout petit peu que React place la div dans le DOM
-      setTimeout(() => {
-        if (window.Calendly) {
-          window.Calendly.initInlineWidget({
-            url: 'https://calendly.com/mohamedbenachenhou430/30min?locale=fr&background_color=0a0a0a&text_color=ffffff&primary_color=ff1313&hide_event_type_details=1&hide_gdpr_banner=1',
-            parentElement: document.querySelector('.calendly-inline-widget'),
-          });
-        }
-      }, 100);
-    }
+    };
+    document.body.appendChild(script);
   }, [inView]);
+
   return (
     <section id="contact" className="bg-noir py-24 relative overflow-hidden">
-      {/* Glow décoratif */}
       <div className="absolute top-1/2 right-0 w-64 h-64 bg-rouge/10 rounded-full blur-[120px] -z-10" />
 
       <div className="container mx-auto px-4">
-        {/* En-tête de section */}
         <div className="mb-16">
           <h2 className="text-rouge font-black uppercase tracking-widest text-sm mb-4 italic">
             // Contact & Inscription
@@ -59,52 +44,35 @@ export default function Contact() {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
-          
-          {/* ZONE GAUCHE : CALENDLY (Intégration Directe) */}
-          <div className="lg:w-2/5 bg-sport-card border border-white/10 relative overflow-hidden min-h-[600px]">
-            {/* Titre au-dessus du calendrier pour le contexte */}
+
+          <div ref={ref} className="lg:w-2/5 bg-sport-card border border-white/10 relative overflow-hidden min-h-[600px]">
             <div className="p-6 bg-rouge/10 border-b border-white/10">
               <h4 className="text-xl font-black text-white uppercase italic">
                 Réserve ton <span className="text-rouge">Bilan</span>
               </h4>
             </div>
 
-            {/* Widget Calendly */}
-            {inView ? (
-            <div 
-              className="calendly-inline-widget w-full h-full"
+            {/* ref React attaché directement — jamais null quand inView est true */}
+            <div
+              ref={calendlyRef}
               style={{ minWidth: '320px', height: '600px' }}
-              loading="lazy"
-            ></div>
-            ) : (
-              <div className="flex items-center justify-center h-full text-gray-500 italic font-body">
-                Chargement du calendrier...
-              </div>
-            )}
+            />
           </div>
 
-          {/* ZONE DROITE : FORMULAIRE (Engagement Léger) */}
           <div className="lg:w-3/5 bg-white/5 border border-white/10 p-8 md:p-12 backdrop-blur-sm relative">
             <h4 className="text-2xl font-black text-white uppercase italic mb-8 border-l-4 border-rouge pl-4">
-                Une question spécifique ?
+              Une question spécifique ?
             </h4>
-            
             <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="flex flex-col gap-2">
                 <label className="text-white uppercase text-[10px] font-black italic tracking-[0.2em]">Nom Complet</label>
-                <input 
-                  type="text" 
-                  placeholder="Ex: Mohamed"
-                  className="bg-white/5 border border-white/10 p-4 text-white focus:outline-none focus:border-rouge transition-all font-body text-sm"
-                />
+                <input type="text" placeholder="Ex: Mohamed"
+                  className="bg-white/5 border border-white/10 p-4 text-white focus:outline-none focus:border-rouge transition-all font-body text-sm" />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-white uppercase text-[10px] font-black italic tracking-[0.2em]">Téléphone</label>
-                <input 
-                  type="tel" 
-                  placeholder="06 ..."
-                  className="bg-white/5 border border-white/10 p-4 text-white focus:outline-none focus:border-rouge transition-all font-body text-sm"
-                />
+                <input type="tel" placeholder="06 ..."
+                  className="bg-white/5 border border-white/10 p-4 text-white focus:outline-none focus:border-rouge transition-all font-body text-sm" />
               </div>
               <div className="flex flex-col gap-2 md:col-span-2">
                 <label className="text-white uppercase text-[10px] font-black italic tracking-[0.2em]">Ton Objectif</label>
@@ -116,13 +84,9 @@ export default function Contact() {
               </div>
               <div className="flex flex-col gap-2 md:col-span-2">
                 <label className="text-white uppercase text-[10px] font-black italic tracking-[0.2em]">Message</label>
-                <textarea 
-                  rows="3" 
-                  placeholder="Dis-moi tout..."
-                  className="bg-white/5 border border-white/10 p-4 text-white focus:outline-none focus:border-rouge transition-all font-body text-sm"
-                ></textarea>
+                <textarea rows="3" placeholder="Dis-moi tout..."
+                  className="bg-white/5 border border-white/10 p-4 text-white focus:outline-none focus:border-rouge transition-all font-body text-sm" />
               </div>
-              
               <button className="md:col-span-2 relative py-4 bg-transparent border-2 border-white text-white font-black uppercase italic tracking-widest overflow-hidden group">
                 <span className="relative z-10 transition-colors duration-500 group-hover:text-noir">Envoyer le message</span>
                 <div className="absolute inset-0 bg-white translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
@@ -132,14 +96,13 @@ export default function Contact() {
 
         </div>
 
-        {/* Rappel des infos de contact direct tout en bas de la section */}
         <div className="mt-16 flex flex-wrap justify-center gap-10 opacity-50">
-            <div className="flex items-center gap-3 text-white text-xs font-bold tracking-widest uppercase">
-                <MdOutlineEmail className="text-rouge text-lg" /> contact@coach-sportif.fr
-            </div>
-            <div className="flex items-center gap-3 text-white text-xs font-bold tracking-widest uppercase">
-                <BsFillTelephoneFill className="text-rouge text-lg" /> 06 12 34 56 78
-            </div>
+          <div className="flex items-center gap-3 text-white text-xs font-bold tracking-widest uppercase">
+            <MdOutlineEmail className="text-rouge text-lg" /> contact@coach-sportif.fr
+          </div>
+          <div className="flex items-center gap-3 text-white text-xs font-bold tracking-widest uppercase">
+            <BsFillTelephoneFill className="text-rouge text-lg" /> 06 12 34 56 78
+          </div>
         </div>
       </div>
     </section>

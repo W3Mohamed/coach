@@ -21,7 +21,7 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <section className="bg-noir py-24 relative">
+    <section id="tarifs" className="bg-noir py-24 relative">
       <div className="container mx-auto px-4">
         
         <div className="mb-16 text-center">
