@@ -1,3 +1,6 @@
+import { useInView } from "react-intersection-observer";
+import { motion } from "framer-motion";
+
 const plans = [
   {
     name: "Essentiel",
@@ -19,28 +22,72 @@ const plans = [
   }
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.18 } }
+};
+
+const cardVariants = (recommended) => ({
+  hidden: {
+    opacity: 0,
+    y: 50,
+    scale: recommended ? 1.05 : 0.97
+  },
+  visible: {
+    opacity: recommended ? 1 : 0.8,
+    y: 0,
+    scale: recommended ? 1.05 : 1,
+    transition: { duration: 0.6, ease: "easeOut" }
+  }
+});
+
+const titleVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+};
+
+const footerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.6, delay: 0.7 } }
+};
+
 export default function Pricing() {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+
   return (
-    <section id="tarifs" className="bg-noir py-24 relative">
+    <section ref={ref} id="tarifs" className="bg-noir py-24 relative">
       <div className="container mx-auto px-4">
-        
-        <div className="mb-16 text-center">
-          <h2 className="text-rouge font-black uppercase tracking-widest text-sm mb-4 italic italic">
+
+        {/* Titre */}
+        <motion.div
+          className="mb-16 text-center"
+          variants={titleVariants}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+        >
+          <h2 className="text-rouge font-black uppercase tracking-widest text-sm mb-4 italic">
             // Tarifs & Forfaits
           </h2>
           <h3 className="text-5xl md:text-6xl font-black text-white uppercase italic">
             INVESTIS EN <span className="text-outline">TOI-MÊME</span>
           </h3>
-        </div>
+        </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 items-center">
+        {/* Grille */}
+        <motion.div
+          className="grid md:grid-cols-3 gap-8 items-center"
+          variants={containerVariants}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+        >
           {plans.map((plan, idx) => (
-            <div 
+            <motion.div
               key={idx}
+              variants={cardVariants(plan.recommended)}
               className={`relative p-8 flex flex-col transition-all duration-500 ${
-                plan.recommended 
-                ? "bg-sport-card border-2 border-rouge scale-105 z-10 shadow-[0_0_50px_rgba(255,19,19,0.2)]" 
-                : "bg-white/5 border border-white/10 scale-100 opacity-80 hover:opacity-100"
+                plan.recommended
+                  ? "bg-sport-card border-2 border-rouge scale-105 z-10 shadow-[0_0_50px_rgba(255,19,19,0.2)]"
+                  : "bg-white/5 border border-white/10 hover:opacity-100"
               }`}
             >
               {plan.recommended && (
@@ -63,20 +110,30 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <a href="#contact" className={`w-full block text-center py-4 font-black uppercase italic tracking-widest transition-all ${
-                plan.recommended 
-                ? "bg-rouge text-white hover:bg-white hover:text-black" 
-                : "bg-white/10 text-white hover:bg-white hover:text-black"
-              }`}>
+              <a
+                href="#contact"
+                className={`w-full block text-center py-4 font-black uppercase italic tracking-widest transition-all ${
+                  plan.recommended
+                    ? "bg-rouge text-white hover:bg-white hover:text-black"
+                    : "bg-white/10 text-white hover:bg-white hover:text-black"
+                }`}
+              >
                 Choisir ce pack
               </a>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <p className="text-center text-gray-500 mt-12 text-sm italic">
+        {/* Note bas de page */}
+        <motion.p
+          className="text-center text-gray-500 mt-12 text-sm italic"
+          variants={footerVariants}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+        >
           * Tous les abonnements sont sans engagement. Résiliable à tout moment.
-        </p>
+        </motion.p>
+
       </div>
     </section>
   );
