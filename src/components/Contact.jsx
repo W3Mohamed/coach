@@ -2,10 +2,28 @@ import { MdOutlineEmail } from "react-icons/md";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { useEffect, useRef } from "react";
 import { useInView } from 'react-intersection-observer';
+import emailjs from "@emailjs/browser";
 
 export default function Contact() {
   const calendlyRef = useRef(null); // ref direct sur la div Calendly
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0 });
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm(
+      import.meta.env.VITE_SERVICE_ID, 
+      import.meta.env.VITE_TEMPLATE_ID, 
+      form.current, 
+      import.meta.env.VITE_PUBLIC_KEY
+    )
+    .then((result) => {
+        alert("Message envoyé avec succès !");
+    }, (error) => {
+        alert("Erreur lors de l'envoi...");
+    });
+  };
 
   useEffect(() => {
     if (!inView || !calendlyRef.current) return;
@@ -63,31 +81,31 @@ export default function Contact() {
             <h4 className="text-2xl font-black text-white uppercase italic mb-8 border-l-4 border-rouge pl-4">
               Une question spécifique ?
             </h4>
-            <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form ref={form} onSubmit={sendEmail} className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="flex flex-col gap-2">
                 <label className="text-white uppercase text-[10px] font-black italic tracking-[0.2em]">Nom Complet</label>
-                <input type="text" placeholder="Ex: Mohamed"
+                <input type="text" name="name" placeholder="Ex: Mohamed"
                   className="bg-white/5 border border-white/10 p-4 text-white focus:outline-none focus:border-rouge transition-all font-body text-sm" />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-white uppercase text-[10px] font-black italic tracking-[0.2em]">Téléphone</label>
-                <input type="tel" placeholder="06 ..."
+                <input type="tel" name="telephone" placeholder="06 ..."
                   className="bg-white/5 border border-white/10 p-4 text-white focus:outline-none focus:border-rouge transition-all font-body text-sm" />
               </div>
               <div className="flex flex-col gap-2 md:col-span-2">
                 <label className="text-white uppercase text-[10px] font-black italic tracking-[0.2em]">Ton Objectif</label>
-                <select className="bg-noir border border-white/10 p-4 text-white focus:outline-none focus:border-rouge transition-all font-body text-sm cursor-pointer">
-                  <option>Perte de poids</option>
-                  <option>Prise de masse</option>
-                  <option>Performance Athlétique</option>
+                <select name="objectif" className="bg-noir border border-white/10 p-4 text-white focus:outline-none focus:border-rouge transition-all font-body text-sm cursor-pointer">
+                  <option value="perte de poids">Perte de poids</option>
+                  <option value="prise de masse">Prise de masse</option>
+                  <option value="performance athlétique">Performance Athlétique</option>
                 </select>
               </div>
               <div className="flex flex-col gap-2 md:col-span-2">
                 <label className="text-white uppercase text-[10px] font-black italic tracking-[0.2em]">Message</label>
-                <textarea rows="3" placeholder="Dis-moi tout..."
+                <textarea name="message" rows="3" placeholder="Dis-moi tout..."
                   className="bg-white/5 border border-white/10 p-4 text-white focus:outline-none focus:border-rouge transition-all font-body text-sm" />
               </div>
-              <button className="md:col-span-2 relative py-4 bg-transparent border-2 border-white text-white font-black uppercase italic tracking-widest overflow-hidden group">
+              <button type="submit" className="md:col-span-2 relative py-4 bg-transparent border-2 border-white text-white font-black uppercase italic tracking-widest overflow-hidden group">
                 <span className="relative z-10 transition-colors duration-500 group-hover:text-noir">Envoyer le message</span>
                 <div className="absolute inset-0 bg-white translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
               </button>
