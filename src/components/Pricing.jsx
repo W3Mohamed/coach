@@ -1,5 +1,6 @@
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 const plans = [
   {
@@ -53,7 +54,16 @@ const footerVariants = {
 
 export default function Pricing() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [plansState, setPlansState] = useState(plans);
 
+  const handleSelect = (index) => {
+    const updatedPlans = plansState.map((plan, i) => ({
+      ...plan,
+      recommended: i === index // Devient true si c'est l'index cliqué, sinon false
+    }));
+    setPlansState(updatedPlans); // On donne le NOUVEAU tableau à React
+  };
+  
   return (
     <section ref={ref} id="tarifs" className="bg-noir py-24 relative">
       <div className="container mx-auto px-4">
@@ -75,12 +85,12 @@ export default function Pricing() {
 
         {/* Grille */}
         <motion.div
-          className="grid md:grid-cols-3 gap-8 items-center"
+          className="grid md:grid-cols-3 gap-8 items-center px-4"
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
         >
-          {plans.map((plan, idx) => (
+          {plansState.map((plan, idx) => (
             <motion.div
               key={idx}
               variants={cardVariants(plan.recommended)}
@@ -109,9 +119,8 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-
-              <a
-                href="#contact"
+              {/* rend ce la variable plan.recommended a true et tous les autre a false quand je clique sur ce button de cet plan */}
+              <button onClick={() => handleSelect(idx) }
                 className={`w-full block text-center py-4 font-black uppercase italic tracking-widest transition-all ${
                   plan.recommended
                     ? "bg-rouge text-white hover:bg-white hover:text-black"
@@ -119,7 +128,7 @@ export default function Pricing() {
                 }`}
               >
                 Choisir ce pack
-              </a>
+              </button>
             </motion.div>
           ))}
         </motion.div>
@@ -138,3 +147,4 @@ export default function Pricing() {
     </section>
   );
 }
+console.log(plans.map(plan => plan.recommended))
